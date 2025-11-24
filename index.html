@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gửi lời yêu thương</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <div class="container">
+        <h1>Một Chút Yêu Thương</h1>
+        <p class="subtitle">
+            Bầu Trời Hạnh Phúc
+        </p>
+
+        <div class="buttons">
+            <a href="./loinhan.html" class="btn btn-primary">
+              Tạo lời nhắn
+          </a>
+            <a href="./huongdan.html" class="btn btn-secondary">
+               Hướng dẫn
+          </a>
+        </div>
+
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon">🚀</div>
+                <h3>Phát Triển Ý Tưởng</h3>
+                <p>Khơi nguồn sáng tạo, biến ý tưởng nhỏ thành điều kỳ diệu.</p>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">🎉</div>
+                <h3>Lan Tỏa Niềm Vui</h3>
+                <p>Mỗi tin nhắn là một món quà lan tỏa tiếng cười và hạnh phúc.</p>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">🌈</div>
+                <h3>Phối Màu Thú Vị</h3>
+                <p>Tự do phối màu sắc, tạo nên bảng màu đầy cảm xúc.</p>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">🎧</div>
+                <h3>Giai Điệu Riêng Biệt</h3>
+                <p>Âm nhạc yêu thích đồng hành cùng thông điệp của bạn.</p>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">💌</div>
+                <h3>Gửi Trao Trọn Vẹn</h3>
+                <p>Chia sẻ nhanh, gửi trao trọn vẹn những tâm tình đặc biệt.</p>
+            </div>
+        </div>
+    </div>
+    <button id="donateBtn" title="donate"> ♡</button>
+    <div id="donateDialog">
+        <div>
+            <button id="closeDonateDialog" title="Đóng">×</button>
+            <h2>Ủng hộ mình</h2>
+            <img src="./qr.jpg" alt="QR Donate" />
+
+            <p>Chào bạn cảm ơn bạn đã truy cập và ủng hộ mình 💌</p>
+        </div>
+    </div>
+    <!-- Footer bản quyền -->
+    <div class="footer">
+        &copy; 2025 Lavang2009. All rights reserved.
+    </div>
+    </div>
+    <script>
+        const donateBtn = document.getElementById('donateBtn');
+        const donateDialog = document.getElementById('donateDialog');
+        const closeDonateDialog = document.getElementById('closeDonateDialog');
+
+        donateBtn.addEventListener('click', () => {
+            donateDialog.classList.add('active');
+        });
+        closeDonateDialog.addEventListener('click', () => {
+            donateDialog.classList.remove('active');
+        });
+
+        donateDialog.addEventListener('click', (e) => {
+            if (e.target === donateDialog) {
+                donateDialog.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+
+</html>

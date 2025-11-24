@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hướng Dẫn Sử Dụng</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 2rem 1rem;
+            background: #f9f9f9;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 700px;
+            width: 100%;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgb(0 0 0 / 0.1);
+            padding: 1.5rem 2rem 2.5rem;
+            text-align: center;
+        }
+        
+        .container img {
+            max-width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            margin-bottom: 1.8rem;
+        }
+        
+        h2 {
+            color: #ff6b9d;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            font-size: 32px;
+        }
+        
+        .guide-step {
+            text-align: left;
+            margin-bottom: 1rem;
+            padding-left: 40px;
+            position: relative;
+            min-height: 30px;
+        }
+        
+        .guide-step::before {
+            content: attr(data-step);
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #ff6b9d;
+            color: white;
+            font-weight: 700;
+            width: 28px;
+            height: 28px;
+            line-height: 28px;
+            text-align: center;
+            border-radius: 50%;
+            user-select: none;
+        }
+        
+        .guide-step p {
+            margin: 0;
+            font-size: 1.1rem;
+            color: #444;
+        }
+        
+        .back-btn {
+            display: inline-block;
+            margin-top: 1.5rem;
+            padding: 0.5rem 1.2rem;
+            background-color: #ff6b9d;
+            color: white;
+            border: none;
+            border-radius: 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+            user-select: none;
+        }
+        
+        .back-btn:hover {
+            background-color: #e85c86;
+        }
+        /* Footer bản quyền */
+        
+        .footer {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #888;
+            margin-top: 2rem;
+            padding: 0.8rem 1rem;
+            border-top: 1px solid #eee;
+            width: 100%;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 1rem 1.2rem 2rem;
+            }
+            .guide-step p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Hướng Dẫn Sử Dụng</h2>
+        <p>Sau đây là các bước tạo link lời nhắn.</p>
+        <p>Bản update thêm hình ảnh bằng cách nhập link ảnh.</p>
+
+        <div class="guide-step" data-step="1">
+            <p>Nhấp vào nút "Tạo lời nhắn" để bắt đầu tùy chỉnh tin nhắn yêu thương.</p>
+        </div>
+        <img src="./1.PNG" alt="Hướng dẫn sử dụng" />
+
+        <div class="guide-step" data-step="2">
+            <p>Nhập những lời yêu thương muốn gửi đến người ấy ví dụ:</p>
+        </div>
+        <p>Yêu em! </p>
+        <p>Anh yêu em </p>
+        <p>Cảm ơn em đã là ánh nắng của anh</p>
+        <img src="./2.PNG" alt="Hướng dẫn sử dụng" />
+
+        <div class="guide-step" data-step="3">
+            <p>Thêm đuôi link để tránh bị trùng với những người khác (không bắt buộc)</p>
+        </div>
+
+        <div class="guide-step" data-step="4">
+            <p>Chọn màu sắc bạn thích để làm nổi bật thông điệp của mình.</p>
+        </div>
+
+        <div class="guide-step" data-step="5">
+            <p>Thêm bài hát yêu thích để tạo không khí đặc biệt cho món quà.</p>
+        </div>
+
+        <div class="guide-step" data-step="6">
+            <p>Nhấn nút tạo link hoặc tạo QR để lưu lại link hoặc ảnh QR đã tạo</p>
+        </div>
+
+        <div class="guide-step" data-step="7">
+            <p>Chia sẻ ngay để lan tỏa yêu thương đến bạn bè và gia đình.</p>
+        </div>
+
+        <div class="guide-step" data-step="8">
+            <p>Bạn có thể ủng hộ tôi bằng cách ấn vào ô ở góc phải bên dưới.</p>
+        </div>
+        <img src="./3.PNG" alt="Hướng dẫn sử dụng" />
+
+        <a href="index.html" class="back-btn">← Quay Lại</a>
+
+        <!-- Footer bản quyền -->
+        <div class="footer">
+            &copy; 2025 Lavang2009. All rights reserved.
+        </div>
+    </div>
+</body>
+
+</html>

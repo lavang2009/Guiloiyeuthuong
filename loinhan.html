@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Lovely</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style-url.css" />
+    <script src="main.js" defer></script>
+</head>
+
+<body>
+    <div id="ui">
+        <label>Nhập các dòng chữ (mỗi dòng một câu):</label><br />
+        <textarea id="inputText"></textarea><br />
+        <label>Nhập ảnh (các link ảnh không liền nhau):</label><br />
+        <textarea id="imageLinks"></textarea><br />
+        <label>Chọn nhạc:</label>
+        <select id="musicSelector">
+      <option value="">-- Không chọn --</option>
+      <option value="./music/e.mp3">Lễ đường</option>
+      <option value="./music/t.mp3">Tháp rơi tự do</option>
+      <option value="./music/d.mp3">Kỵ sĩ và ánh sao</option>
+      <option value="./music/s.mp3">Có chắc yêu là đây</option>
+      <option value="./music/l.mp3">Em là bà nội của anh</option>
+      <option value="./music/f.mp3">Giấc mơ tình cờ</option>
+    </select><br/>
+        <div id="buttonContainer">
+            <button id="startBtn">Tạo link</button>
+            <button id="qrBtn">Tạo QR</button>
+        </div>
+        <a id="shareLink" target="_blank" title="Click để mở link trong tab mới"></a><br />
+        <span id="copyMsg" style="display:none; color: rgb(94, 189, 94);">✔ Đã sao chép!</span>
+        <div class="heart-frame" style="display:none; margin-top:10px;">
+            <canvas id="finalCanvas" width="320" height="296"></canvas>
+            <div class="info-text">Click ảnh để tải về</div>
+        </div>
+        <!-- Footer bản quyền -->
+        <div class="footer">
+            &copy; 2025 Lavang2009. All rights reserved.
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
+
+    <script>
+        const _0x5ed188 = _0x2a03;
+        (function(_0x1fa00e, _0x50869b) {
+            const _0x553521 = _0x2a03,
+                _0x11f9a1 = _0x1fa00e();
+            while (!![]) {
+                try {
+                    const _0x297542 = parseInt(_0x553521(0x26b)) / 0x1 * (-parseInt(_0x553521(0x267)) / 0x2) + parseInt(_0x553521(0x29d)) / 0x3 * (-parseInt(_0x553521(0x254)) / 0x4) + parseInt(_0x553521(0x212)) / 0x5 * (parseInt(_0x553521(0x221)) / 0x6) + -parseInt(_0x553521(0x248)) / 0x7 * (parseInt(_0x553521(0x287)) / 0x8) + -parseInt(_0x553521(0x20b)) / 0x9 * (parseInt(_0x553521(0x294)) / 0xa) + parseInt(_0x553521(0x28a)) / 0xb * (-parseInt(_0x553521(0x249)) / 0xc) + parseInt(_0x553521(0x25f)) / 0xd;
+                    if (_0x297542 === _0x50869b) break;
+                    else _0x11f9a1['push'](_0x11f9a1['shift']());
+                } catch (_0x4ba724) {
+                    _0x11f9a1['push'](_0x11f9a1['shift']());
+                }
+            }
+        }(_0x2449, 0xb40ea));
+
+        function _0x2449() {
+            const _0x2ba0a4 = ['pos', 'parse', 'fillText', 'Scene', 'multiplyScalar', 'set', 'inline', 'startBtn', 'positions', '38154dnjWuE', 'Line', 'needsUpdate', 'PerspectiveCamera', 'Không\x20thể\x20phát\x20nhạc\x20tự\x20động:', '#ffffff00', 'forEach', 'Ví\x20dụ:\x20\x0aAnh\x20yêu\x20em\x0aAnh\x20nhớ\x20em\x0aThêm\x20icon\x20❤️', 'placeholder', 'M23.6,0c-3.4,0-6.3,2.7-7.6,5.2C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4\x20c0,9.4,16,21.2,16,21.2s16-11.8,16-21.2C32,3.8,28.2,0,23.6,0z', 'textAlign', 'touches', 'innerHeight', 'delayOffset', 'render', 'inputText', 'WebGLRenderer', 'sin', 'PointsMaterial', 'CanvasTexture', 'copy', '#63c7c7', 'hash', 'getElementById', 'setAttribute', 'font', 'click', 'startsWith', 'dispose', 'fill', 'Chưa\x20có\x20link\x20để\x20tạo\x20QR!\x20Vui\x20lòng\x20tạo\x20link\x20trước.', '\x20\x20\x20\x20@font-face\x20{\x0a\x20\x20\x20\x20\x20\x20font-family:\x20\x27MyFont\x27;\x0a\x20\x20\x20\x20\x20\x20src:\x20url(\x27./DF.ttf\x27)\x20format(\x27truetype\x27);\x0a\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20html,\x0a\x20\x20\x20\x20body\x20{\x0a\x20\x20\x20\x20\x20\x20height:\x20100%;\x0a\x20\x20\x20\x20\x20\x20margin:\x200;\x0a\x20\x20\x20\x20\x20\x20display:\x20flex;\x0a\x20\x20\x20\x20\x20\x20justify-content:\x20center;\x0a\x20\x20\x20\x20\x20\x20align-items:\x20center;\x0a\x20\x20\x20\x20\x20\x20background:\x20linear-gradient(135deg,\x20#1e2a38,\x20#16202b);\x0a\x20\x20\x20\x20\x20\x20color:\x20#cfd8dc;\x0a\x20\x20\x20\x20\x20\x20font-family:\x20\x27Segoe\x20UI\x27,\x20Tahoma,\x20Geneva,\x20Verdana,\x20sans-serif;\x0a\x20\x20\x20\x20\x20\x20overflow:\x20hidden;\x0a\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20#ui\x20{\x0a\x20\x20\x20\x20\x20\x20position:\x20fixed;\x0a\x20\x20\x20\x20\x20\x20top:\x2050%;\x0a\x20\x20\x20\x20\x20\x20left:\x2050%;\x0a\x20\x20\x20\x20\x20\x20transform:\x20translate(-50%,\x20-50%);\x0a\x20\x20\x20\x20\x20\x20width:\x20320px;\x0a\x20\x20\x20\x20\x20\x20padding:\x2015px\x2020px;\x0a\x20\x20\x20\x20\x20\x20border-radius:\x2012px;\x0a\x20\x20\x20\x20\x20\x20z-index:\x201000;\x0a\x20\x20\x20\x20\x20\x20backdrop-filter:\x20blur(8px);\x0a\x20\x20\x20\x20\x20\x20box-sizing:\x20border-box;\x0a\x20\x20\x20\x20\x20\x20max-height:\x2080vh;\x0a\x20\x20\x20\x20\x20\x20overflow-y:\x20scroll;\x0a\x0a\x20\x20\x20\x20\x20\x20scrollbar-width:\x20none;\x0a\x20\x20\x20\x20\x20\x20-ms-overflow-style:\x20none;\x0a\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20#ui::-webkit-scrollbar\x20{\x0a\x20\x20\x20\x20\x20\x20display:\x20none;\x0a\x20\x20\x20\x20}\x0a\x0a\x0a\x20\x20\x20\x20#ui\x20label\x20{\x0a\x20\x20\x20\x20\x20\x20font-weight:\x20600;\x0a\x20\x20\x20\x20\x20\x20font-size:\x2015px;\x0a\x20\x20\x20\x20\x20\x20display:\x20block;\x0a\x20\x20\x20\x20\x20\x20margin-bottom:\x206px;\x0a\x20\x20\x20\x20\x20\x20color:\x20#a8c0ff;\x0a\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20#ui\x20textarea\x20{\x0a\x20\x20\x20\x20\x20\x20width:\x2090%;\x0a\x20\x20\x20\x20\x20\x20height:\x2070px;\x0a\x20\x20\x20\x20\x20\x20margin-bottom:\x2012px;\x0a\x20\x20\x20\x20\x20\x20background:\x20#1b1b1b;\x0a\x20\x20\x20\x20\x20\x20border:\x201px\x20solid\x20#3d3d3d;\x0a\x20\x20\x20\x20\x20\x20color:\x20#ddd;\x0a\x20\x20\x20\x20\x20\x20font-size:\x2014px;\x0a\x20\x20\x20\x20\x20\x20resize:\x20vertical;\x0a\x20\x20\x20\x20\x20\x20padding:\x2010px\x2012px;\x0a\x20\x20\x20\x20\x20\x20border-radius:\x208px;\x0a\x20\x20\x20\x20\x20\x20font-family:\x20\x27Courier\x20New\x27,\x20Courier,\x20monospace;\x0a\x20\x20\x20\x20\x20\x20transition:\x20border-color\x200.3s\x20ease;\x0a\x20\x20\x20\x20\x20\x20overflow-y:\x20scroll;\x0a\x20\x20\x20\x20\x20\x20scrollbar-width:\x20none;\x0a\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20#ui\x20textarea::-webkit-scrollbar\x20{\x0a\x20\x20\x20\x20\x20\x20display:\x20none;\x0a\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20#ui\x20textarea:focus\x20{\x0a\x20\x20\x20\x20\x20\x20border-color:\x20#66aaff;\x0a\x20\x20\x20\x20\x20\x20outline:\x20none;\x0a\x20\x20\x20\x20\x20\x20background:\x20#222;\x0a\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20#musicSelector\x20{\x0a\x20\x20\x20\x20\x20\x20width:\x20100%;\x0a\x20\x20\x20\x20\x20\x20padding:\x2010px\x2014px;\x0a\x20\x20\x20\x20\x20\x20font-size:\x2015px;\x0a\x20\x20\x20\x20\x20\x20border-radius:\x2012px;\x0a\x20\x20\x20\x20\x20\x20border:\x20none;\x0a\x20\x20\x20\x20\x20\x20background:\x20#223344;\x0a\x20\x20\x20\x20\x20\x20color:\x20#e0e6f3;\x0a\x20\x20\x20\x20\x20\x20text-align-last:\x20center;\x0a\x20\x20\x20\x20\x20\x20text-align:\x20center;\x0a\x20\x20\x20\x20\x20\x20box-shadow:\x20inset\x200\x200\x2010px\x20rgba(0,\x200,\x200,\x200.6);\x0a\x20\x20\x20\x20\x20\x20margin-bottom:\x2015px;\x0a\x20\x20\x20\x20\x20\x20cursor:\x20pointer;\x0a\x20\x20\x20\x20\x20\x20transition:\x20background-color\x200.3s\x20ease;\x0a\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20#musicSelector:hover\x20{\x0a\x20\x20\x20\x20\x20\x20background-color:\x20#2a3b56;\x0a\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20#buttonContainer\x20{\x0a\x20\x20\x20\x20\x20\x20display:\x20flex;\x0a\x20\x20\x20\x20\x20\x20gap:\x2012px;\x0a\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20#startBtn,\x0a\x20\x20\x20\x20#qrBtn\x20{\x0a\x20\x20\x20\x20\x20\x20flex:\x201;\x0a\x20\x20\x20\x20\x20\x20padding:\x2012px\x200;\x0a\x20\x20\x20\x20\x20\x20background:\x20#4a90e2;\x0a\x20\x20\x20\x20\x20\x20border:\x20none;\x0a\x20\x20\x20\x20\x20\x20color:\x20white;\x0a\x20\x20\x20\x20\x20\x20font-weight:\x20700;\x0a\x20\x20\x20\x20\x20\x20font-size:\x2017px;\x0a\x20\x20\x20\x20\x20\x20cursor:\x20pointer;\x0a\x20\x20\x20\x20\x20\x20border-radius:\x2010px;\x0a\x20\x20\x20\x20\x20\x20box-shadow:\x200\x205px\x2015px\x20rgba(74,\x20144,\x20226,\x200.6);\x0a\x20\x20\x20\x20\x20\x20transition:\x20background-color\x200.3s\x20ease,\x20box-shadow\x200.3s\x20ease;\x0a\x20\x20\x20\x20}\x0a\x0a\x0a\x20\x20\x20\x20#startBtn:hover\x20{\x0a\x20\x20\x20\x20\x20\x20background:\x20#6aa0ff;\x0a\x20\x20\x20\x20\x20\x20box-shadow:\x200\x208px\x2025px\x20rgba(106,\x20160,\x20255,\x200.8);\x0a\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20#shareLink\x20{\x0a\x20\x20\x20\x20\x20\x20display:\x20inline-block;\x0a\x20\x20\x20\x20\x20\x20max-width:\x20250px;\x0a\x20\x20\x20\x20\x20\x20white-space:\x20nowrap;\x0a\x20\x20\x20\x20\x20\x20overflow:\x20hidden;\x0a\x20\x20\x20\x20\x20\x20text-overflow:\x20ellipsis;\x0a\x20\x20\x20\x20\x20\x20vertical-align:\x20bottom;\x0a\x20\x20\x20\x20\x20\x20color:\x20#42a5f5;\x0a\x20\x20\x20\x20\x20\x20cursor:\x20pointer;\x0a\x20\x20\x20\x20\x20\x20text-decoration:\x20underline;\x0a\x20\x20\x20\x20\x20\x20font-size:\x2015px;\x0a\x20\x20\x20\x20\x20\x20user-select:\x20all;\x0a\x20\x20\x20\x20\x20\x20margin-top:\x2010px;\x0a\x20\x20\x20\x20\x20\x20text-align:\x20center;\x0a\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20.heart-frame\x20{\x0a\x20\x20\x20\x20\x20\x20position:\x20relative;\x0a\x20\x20\x20\x20\x20\x20width:\x20320px;\x0a\x20\x20\x20\x20\x20\x20height:\x20296px;\x0a\x20\x20\x20\x20\x20\x20margin:\x2020px\x20auto;\x0a\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20#finalCanvas\x20{\x0a\x20\x20\x20\x20\x20\x20cursor:\x20pointer;\x0a\x20\x20\x20\x20\x20\x20display:\x20block;\x0a\x20\x20\x20\x20\x20\x20margin:\x200\x20auto;\x0a\x20\x20\x20\x20\x20\x20border-radius:\x2012px;\x0a\x20\x20\x20\x20\x20\x20box-shadow:\x200\x200\x208px\x20rgba(0,\x200,\x200,\x200.1);\x0a\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20.info-text\x20{\x0a\x20\x20\x20\x20\x20\x20text-align:\x20center;\x0a\x20\x20\x20\x20\x20\x20color:\x20#ff679a;\x0a\x20\x20\x20\x20\x20\x20font-size:\x2012px;\x0a\x20\x20\x20\x20\x20\x20margin-top:\x205px;\x0a\x20\x20\x20\x20}', 'scale', 'shareLink', 'position', 'Lỗi\x20tạo\x20QR\x20code:', 'play', 'searchParams', 'clipboard', '28MutFUJ', '12RxXUUC', 'clientX', 'MeshBasicMaterial', 'random', 'getContext', 'innerWidth', 'textLines', 'updateProjectionMatrix', 'lerpVectors', 'touchmove', 'toString', '1991168zYNQsM', '#ff679a', 'pathname', 'userData', 'MathUtils', 'Nhạc\x20từ\x20URL:', 'fillStyle', 'line', 'toCanvas', 'load', 'focus', '29320278ZsIXLq', 'strokeText', 'warn', 'filter', 'then', 'pause', 'Không\x20có\x20music\x20trong\x20data', 'canvas', '3284lCUPNy', 'location', 'clone', 'error', '319IoTklI', 'BufferAttribute', 'visible', 'removeChild', 'trim', 'block', 'geometry', 'imageLinks', '48px\x20MyFont', 'lookAt', 'copyMsg', 'replaceState', 'height', 'floor', 'inline-block', 'none', 'length', 'TextureLoader', 'finalCanvas', 'loop', 'touchstart', 'cos', 'translate', 'Float32BufferAttribute', 'addEventListener', 'acos', 'SpriteMaterial', 'Vector3', '1148768tDglup', 'padStart', 'textBaseline', '4676870zrgKoB', 'heart_qrcode.png', 'removeEventListener', 'value', 'clearRect', 'Vui\x20lòng\x20nhập\x20ít\x20nhất\x20một\x20link\x20ảnh!', '#e91e63', 'drawImage', 'querySelector', 'Vui\x20lòng\x20nhập\x20ít\x20nhất\x20một\x20câu!', '302590iYJchA', 'domElement', 'attributes', 'add', 'stringify', 'slice', 'resize', 'strokeStyle', 'music', '3iTZCzn', 'progress', '#ff8690', 'origin', 'body', '#76b776', 'normalize', 'volume', 'catch', 'push', 'image/png', 'appendChild', 'lineWidth', '#cfd8dc', 'velocity', 'save', 'revokeObjectURL', 'createElement', 'setSize', 'display', 'innerHTML', 'bold\x2072px\x20MyFont', 'log', 'join', 'randFloatSpread', 'delete', 'LineBasicMaterial', 'clear', 'BufferGeometry', 'href', 'textContent', 'change', '117TVnMRD', 'split', 'replace', 'restore', 'width', 'Ví\x20dụ:\x20\x0ahttps://lavang/image1.png\x0ahttps://lavang/image2.png\x0aThêm\x20chữ\x20ngẫu\x20nhiên\x20bỏ\x20qua\x20ảnh', 'middle', '705gSoAGn', 'style', '#data=', 'center', 'randFloat', 'LinearFilter'];
+            _0x2449 = function() {
+                return _0x2ba0a4;
+            };
+            return _0x2449();
+        }
+        const style = document[_0x5ed188(0x1fc)]('style');
+        style[_0x5ed188(0x1ff)] = _0x5ed188(0x240), document['head'][_0x5ed188(0x1f6)](style), document[_0x5ed188(0x238)](_0x5ed188(0x230))[_0x5ed188(0x229)] = _0x5ed188(0x228), document[_0x5ed188(0x238)](_0x5ed188(0x272))[_0x5ed188(0x229)] = _0x5ed188(0x210);
+        const encodeData = _0x28bbc7 => btoa(encodeURIComponent(_0x28bbc7)[_0x5ed188(0x20d)](/%(\w{2})/g, (_0x522f55, _0x1cae72) => String['fromCharCode']('0x' + _0x1cae72)))[_0x5ed188(0x20d)](/[+/=]/g, _0x169fd3 => ({
+                '+': '-',
+                '/': '_',
+                '=': ''
+            }[_0x169fd3] || '')),
+            decodeData = _0x22689e => {
+                const _0x505ea4 = _0x5ed188;
+                _0x22689e = _0x22689e[_0x505ea4(0x20d)](/[-_]/g, _0x5c62d2 => ({
+                    '-': '+',
+                    '_': '/'
+                }[_0x5c62d2]));
+                while (_0x22689e['length'] % 0x4) _0x22689e += '=';
+                return decodeURIComponent(atob(_0x22689e)['split']('')['map'](_0x34386a => '%' + _0x34386a['charCodeAt'](0x0)[_0x505ea4(0x253)](0x10)[_0x505ea4(0x288)](0x2, '0'))[_0x505ea4(0x202)](''));
+            };
+
+        function getDataFromURL() {
+            const _0x36dc52 = _0x5ed188;
+            if (location[_0x36dc52(0x237)][_0x36dc52(0x23c)](_0x36dc52(0x214))) {
+                const _0x311adc = location['hash'][_0x36dc52(0x299)](0x6),
+                    _0x4eba35 = decodeData(_0x311adc);
+                if (_0x4eba35) try {
+                    return JSON[_0x36dc52(0x219)](_0x4eba35);
+                } catch {
+                    return null;
+                }
+            }
+            return null;
+        }
+        const inputTextEl = document['getElementById'](_0x5ed188(0x230)),
+            imageLinksEl = document[_0x5ed188(0x238)]('imageLinks'),
+            startBtn = document[_0x5ed188(0x238)](_0x5ed188(0x21f)),
+            shareLinkEl = document[_0x5ed188(0x238)](_0x5ed188(0x242)),
+            copyMsg = document['getElementById'](_0x5ed188(0x275)),
+            qrBtn = document['getElementById']('qrBtn'),
+            heartFrame = document[_0x5ed188(0x292)]('.heart-frame'),
+            canvas = document['getElementById'](_0x5ed188(0x27d)),
+            ctx = canvas[_0x5ed188(0x24d)]('2d'),
+            musicSelector = document[_0x5ed188(0x238)]('musicSelector');
+        let audio = null;
+
+        function waitUserToStartMusic(_0x8b4e78) {
+            const _0x51b2a4 = _0x5ed188,
+                _0x55d681 = () => {
+                    const _0x291aa1 = _0x2a03;
+                    playMusic(_0x8b4e78), document[_0x291aa1(0x28c)](_0x291aa1(0x23b), _0x55d681), document['removeEventListener'](_0x291aa1(0x27f), _0x55d681);
+                };
+            document[_0x51b2a4(0x283)](_0x51b2a4(0x23b), _0x55d681), document[_0x51b2a4(0x283)](_0x51b2a4(0x27f), _0x55d681);
+        }
+
+        function playMusic(_0x4acf3f) {
+            const _0x40bdaa = _0x5ed188;
+            audio && (audio[_0x40bdaa(0x264)](), audio = null), _0x4acf3f && (audio = new Audio(_0x4acf3f), audio[_0x40bdaa(0x27e)] = !![], audio[_0x40bdaa(0x1f2)] = 0.5, audio[_0x40bdaa(0x245)]()[_0x40bdaa(0x1f3)](_0x4fda96 => {
+                const _0x38bc09 = _0x40bdaa;
+                console[_0x38bc09(0x261)](_0x38bc09(0x225), _0x4fda96);
+            }));
+        }
+
+        function updateURLParam(_0x57b8bc, _0x4ba119) {
+            const _0x3fa29e = _0x5ed188,
+                _0x503cd3 = new URL(window[_0x3fa29e(0x268)]);
+            _0x4ba119 ? _0x503cd3['searchParams'][_0x3fa29e(0x21d)](_0x57b8bc, _0x4ba119) : _0x503cd3[_0x3fa29e(0x246)][_0x3fa29e(0x204)](_0x57b8bc), window['history'][_0x3fa29e(0x276)]({}, '', _0x503cd3);
+        }
+        musicSelector[_0x5ed188(0x283)](_0x5ed188(0x20a), () => {
+            const _0xac0ce0 = _0x5ed188,
+                _0x4f8dd5 = musicSelector[_0xac0ce0(0x28d)];
+            updateURLParam(_0xac0ce0(0x29c), _0x4f8dd5), playMusic(_0x4f8dd5);
+        }), window[_0x5ed188(0x283)]('load', () => {
+            const _0x3d569e = _0x5ed188,
+                _0x27c803 = getDataFromURL();
+            _0x27c803 && _0x27c803[_0x3d569e(0x29c)] && (musicSelector[_0x3d569e(0x28d)] = _0x27c803['music'], waitUserToStartMusic(_0x27c803[_0x3d569e(0x29c)]));
+        });
+        let images = [],
+            textLines = [];
+        const scene = new THREE[(_0x5ed188(0x21b))](),
+            camera = new THREE[(_0x5ed188(0x224))](0x4b, window['innerWidth'] / window['innerHeight'], 0.1, 0xbb8);
+        camera[_0x5ed188(0x243)]['z'] = 0x190;
+        const renderer = new THREE[(_0x5ed188(0x231))]({
+            'antialias': !![],
+            'alpha': !![]
+        });
+        renderer[_0x5ed188(0x1fd)](window['innerWidth'], window[_0x5ed188(0x22d)]), document[_0x5ed188(0x2a1)][_0x5ed188(0x1f6)](renderer[_0x5ed188(0x295)]);
+        const starGeo = new THREE[(_0x5ed188(0x207))](),
+            starCount = 0x320,
+            starPos = [];
+        for (let i = 0x0; i < starCount; i++) {
+            const r = THREE['MathUtils'][_0x5ed188(0x216)](0x384, 0x4b0),
+                theta = Math[_0x5ed188(0x284)](THREE[_0x5ed188(0x258)][_0x5ed188(0x203)](0x2)),
+                phi = THREE[_0x5ed188(0x258)][_0x5ed188(0x203)](0x2 * Math['PI']);
+            starPos['push'](r * Math[_0x5ed188(0x232)](theta) * Math[_0x5ed188(0x280)](phi), r * Math[_0x5ed188(0x232)](theta) * Math['sin'](phi), r * Math['cos'](theta));
+        }
+        starGeo[_0x5ed188(0x239)](_0x5ed188(0x243), new THREE[(_0x5ed188(0x282))](starPos, 0x3));
+        const starsMat = new THREE[(_0x5ed188(0x233))]({
+            'color': 0xffffff,
+            'size': 0x5,
+            'transparent': !![],
+            'opacity': 0.9
+        });
+        scene[_0x5ed188(0x297)](new THREE['Points'](starGeo, starsMat));
+        const starPositions = [];
+        for (let i = 0x0; i < starCount; i++) {
+            starPositions[_0x5ed188(0x1f4)](new THREE[(_0x5ed188(0x286))](starPos[i * 0x3], starPos[i * 0x3 + 0x1], starPos[i * 0x3 + 0x2]));
+        }
+        const shootingStars = [],
+            shootingStarCount = 0x5;
+        for (let i = 0x0; i < shootingStarCount; i++) {
+            const geometry = new THREE[(_0x5ed188(0x207))](),
+                positions = new Float32Array(0xa * 0x3);
+            geometry[_0x5ed188(0x239)]('position', new THREE[(_0x5ed188(0x26c))](positions, 0x3));
+            const material = new THREE[(_0x5ed188(0x205))]({
+                    'color': 0xffffff,
+                    'transparent': !![],
+                    'opacity': 0.9
+                }),
+                line = new THREE[(_0x5ed188(0x222))](geometry, material),
+                pos = new THREE[(_0x5ed188(0x286))](THREE[_0x5ed188(0x258)][_0x5ed188(0x203)](0x3e8), THREE['MathUtils'][_0x5ed188(0x216)](0x190, 0x2bc), THREE[_0x5ed188(0x258)][_0x5ed188(0x203)](0x3e8)),
+                velocity = new THREE[(_0x5ed188(0x286))](0.8, -0x1, 0.2)['normalize']()[_0x5ed188(0x21c)](0x5 + Math[_0x5ed188(0x24c)]() * 0x5);
+            shootingStars[_0x5ed188(0x1f4)]({
+                'line': line,
+                'positions': positions,
+                'pos': pos,
+                'velocity': velocity
+            }), scene[_0x5ed188(0x297)](line);
+        }
+        const shootingStarsFromStars = [],
+            shootingStarCountFromStars = 0x1e;
+        for (let i = 0x0; i < shootingStarCountFromStars; i++) {
+            const geometry = new THREE[(_0x5ed188(0x207))](),
+                positions = new Float32Array(0xa * 0x3);
+            geometry['setAttribute'](_0x5ed188(0x243), new THREE['BufferAttribute'](positions, 0x3));
+            const material = new THREE[(_0x5ed188(0x205))]({
+                    'color': 0xffffff,
+                    'transparent': !![],
+                    'opacity': 0.9
+                }),
+                line = new THREE['Line'](geometry, material),
+                startIndex = Math['floor'](Math[_0x5ed188(0x24c)]() * starPositions[_0x5ed188(0x27b)]),
+                pos = starPositions[startIndex]['clone'](),
+                dir = pos[_0x5ed188(0x269)]()[_0x5ed188(0x1f1)](),
+                velocity = dir['clone']()[_0x5ed188(0x297)](new THREE[(_0x5ed188(0x286))](THREE[_0x5ed188(0x258)][_0x5ed188(0x203)](0.5), THREE['MathUtils'][_0x5ed188(0x203)](0.5), THREE[_0x5ed188(0x258)]['randFloatSpread'](0.5)))[_0x5ed188(0x1f1)]()['multiplyScalar'](0x5 + Math[_0x5ed188(0x24c)]() * 0x5);
+            shootingStarsFromStars['push']({
+                'line': line,
+                'positions': positions,
+                'pos': pos,
+                'velocity': velocity
+            }), scene['add'](line);
+        }
+        images = [];
+        const textureLoader = new THREE[(_0x5ed188(0x27c))](),
+            group = new THREE['Group']();
+        scene[_0x5ed188(0x297)](group);
+
+        function randomPosOnSphere(_0x2d3ce1) {
+            const _0x59bd8b = _0x5ed188,
+                _0x171a62 = Math[_0x59bd8b(0x284)](THREE[_0x59bd8b(0x258)][_0x59bd8b(0x203)](0x2)),
+                _0x2daa15 = THREE['MathUtils']['randFloatSpread'](0x2 * Math['PI']);
+            return new THREE[(_0x59bd8b(0x286))](_0x2d3ce1 * Math[_0x59bd8b(0x232)](_0x171a62) * Math[_0x59bd8b(0x280)](_0x2daa15), _0x2d3ce1 * Math[_0x59bd8b(0x232)](_0x171a62) * Math['sin'](_0x2daa15), _0x2d3ce1 * Math[_0x59bd8b(0x280)](_0x171a62));
+        }
+
+        function createTextSprite(_0x421d5f) {
+            const _0x3a290f = _0x5ed188,
+                _0x1e2f11 = document[_0x3a290f(0x1fc)]('canvas'),
+                _0x634301 = 0x200;
+            _0x1e2f11[_0x3a290f(0x20f)] = _0x634301, _0x1e2f11[_0x3a290f(0x277)] = 0x80;
+            const _0x1523e9 = _0x1e2f11[_0x3a290f(0x24d)]('2d'),
+                _0x554337 = [_0x3a290f(0x29f), _0x3a290f(0x1f0), _0x3a290f(0x236)],
+                _0x124ad6 = [_0x3a290f(0x1f8), _0x3a290f(0x1f8), _0x3a290f(0x1f8)];
+            let _0x6ad4cb = 0x0;
+            const _0x2c211 = new THREE[(_0x3a290f(0x234))](_0x1e2f11);
+            _0x2c211['minFilter'] = THREE[_0x3a290f(0x217)];
+            const _0x35f444 = new THREE[(_0x3a290f(0x285))]({
+                    'map': _0x2c211,
+                    'transparent': !![]
+                }),
+                _0x31f887 = new THREE['Sprite'](_0x35f444);
+            _0x31f887[_0x3a290f(0x241)][_0x3a290f(0x21d)](0x96, 0x28, 0x1);
+
+            function _0x433f01() {
+                const _0x35b929 = _0x3a290f;
+                _0x1523e9[_0x35b929(0x28e)](0x0, 0x0, _0x1e2f11[_0x35b929(0x20f)], _0x1e2f11['height']), _0x1523e9[_0x35b929(0x23a)] = _0x35b929(0x200), _0x1523e9[_0x35b929(0x22b)] = _0x35b929(0x215), _0x1523e9[_0x35b929(0x289)] = _0x35b929(0x211), _0x1523e9[_0x35b929(0x25a)] = _0x554337[_0x6ad4cb], _0x1523e9[_0x35b929(0x1f7)] = 0x1, _0x1523e9[_0x35b929(0x29b)] = _0x124ad6[_0x6ad4cb], _0x1523e9[_0x35b929(0x260)](_0x421d5f, _0x634301 / 0x2, 0x40), _0x1523e9[_0x35b929(0x21a)](_0x421d5f, _0x634301 / 0x2, 0x40), _0x2c211[_0x35b929(0x223)] = !![];
+            }
+            return _0x433f01(), setInterval(() => {
+                _0x6ad4cb = (_0x6ad4cb + 0x1) % _0x554337['length'], _0x433f01();
+            }, 0x2710), document['fonts'][_0x3a290f(0x25d)](_0x3a290f(0x273))['then'](() => {
+                _0x433f01();
+            }), _0x31f887;
+        }
+        const planes = [],
+            labels = [],
+            imagePositions = [],
+            textPositions = [],
+            boxCount = 0x1e,
+            radiusImage = 0x12c,
+            radiusText = 0x15e;
+
+        function initScene() {
+            const _0x544c41 = _0x5ed188;
+            group[_0x544c41(0x206)](), planes['length'] = 0x0, labels[_0x544c41(0x27b)] = 0x0, imagePositions[_0x544c41(0x27b)] = 0x0, textPositions['length'] = 0x0;
+            if (images[_0x544c41(0x27b)] === 0x0 || textLines[_0x544c41(0x27b)] === 0x0) return;
+            for (let _0x41faa1 = 0x0; _0x41faa1 < boxCount; _0x41faa1++) {
+                const _0x3b8ebd = 0x14 + Math[_0x544c41(0x24c)]() * 0xa,
+                    _0xa361b4 = new THREE['PlaneGeometry'](_0x3b8ebd, _0x3b8ebd),
+                    _0xc6be5d = textureLoader[_0x544c41(0x25d)](images[_0x41faa1 % images[_0x544c41(0x27b)]]),
+                    _0x3a3e12 = new THREE[(_0x544c41(0x24b))]({
+                        'map': _0xc6be5d,
+                        'transparent': !![]
+                    }),
+                    _0x2f1e55 = new THREE['Mesh'](_0xa361b4, _0x3a3e12),
+                    _0x533761 = randomPosOnSphere(radiusImage);
+                imagePositions[_0x544c41(0x1f4)](_0x533761), _0x2f1e55[_0x544c41(0x243)][_0x544c41(0x21d)](0x0, 0x0, 0x0), _0x2f1e55[_0x544c41(0x241)]['set'](0.05, 0.05, 0.05), _0x2f1e55[_0x544c41(0x257)] = {
+                    'progress': 0x0,
+                    'speed': 0.0005 + Math[_0x544c41(0x24c)]() * 0.0005,
+                    'delayOffset': _0x41faa1 * 0.02
+                }, group[_0x544c41(0x297)](_0x2f1e55), planes[_0x544c41(0x1f4)](_0x2f1e55);
+            }
+            for (let _0x4c4be5 = 0x0; _0x4c4be5 < boxCount * 0x2; _0x4c4be5++) {
+                const _0x58a977 = textLines[_0x4c4be5 % textLines[_0x544c41(0x27b)]],
+                    _0x49e1e3 = createTextSprite(_0x58a977),
+                    _0x1910c5 = randomPosOnSphere(radiusText);
+                textPositions[_0x544c41(0x1f4)](_0x1910c5), _0x49e1e3[_0x544c41(0x243)][_0x544c41(0x21d)](0x0, 0x0, 0x0), _0x49e1e3['scale'][_0x544c41(0x21d)](1.5, 0.4, 0x1), _0x49e1e3[_0x544c41(0x257)] = {
+                    'progress': 0x0,
+                    'speed': 0.0005 + Math['random']() * 0.0005,
+                    'delayOffset': _0x4c4be5 * 0.02
+                }, scene[_0x544c41(0x297)](_0x49e1e3), labels[_0x544c41(0x1f4)](_0x49e1e3);
+            }
+        }
+
+        function updateLabelText(_0x83b11d, _0x581523) {
+            const _0x2f4fc9 = _0x5ed188;
+            if (_0x83b11d < 0x0 || _0x83b11d >= labels[_0x2f4fc9(0x27b)]) return;
+            const _0x3979c4 = labels[_0x83b11d];
+            _0x3979c4 && (scene['remove'](_0x3979c4), _0x3979c4['material']['map']['dispose'](), _0x3979c4['material'][_0x2f4fc9(0x23d)]());
+            if (_0x581523[_0x2f4fc9(0x26f)]() === '') {
+                labels[_0x83b11d] = null;
+                return;
+            }
+            const _0x16dc16 = createTextSprite(_0x581523);
+            _0x16dc16[_0x2f4fc9(0x243)][_0x2f4fc9(0x235)](textPositions[_0x83b11d]), scene[_0x2f4fc9(0x297)](_0x16dc16), labels[_0x83b11d] = _0x16dc16;
+        }
+        initScene();
+
+        function _0x2a03(_0x4d13fa, _0x3d843e) {
+            const _0x244911 = _0x2449();
+            return _0x2a03 = function(_0x2a036b, _0x258719) {
+                _0x2a036b = _0x2a036b - 0x1f0;
+                let _0x89ae96 = _0x244911[_0x2a036b];
+                return _0x89ae96;
+            }, _0x2a03(_0x4d13fa, _0x3d843e);
+        }
+        let targetRotX = 0x0,
+            targetRotY = 0x0,
+            currentRotX = 0x0,
+            currentRotY = 0x0;
+        const maxRotX = Math['PI'] / 0x6,
+            maxRotY = Math['PI'] / 0x4;
+
+        function updateTargetRotation(_0x7d55b2, _0x2c08bb) {
+            const _0x4e028d = _0x5ed188,
+                _0x1fd7a4 = _0x7d55b2 / window[_0x4e028d(0x24e)] * 0x2 - 0x1,
+                _0x593a67 = _0x2c08bb / window[_0x4e028d(0x22d)] * 0x2 - 0x1;
+            targetRotY = _0x1fd7a4 * maxRotY, targetRotX = _0x593a67 * maxRotX;
+        }
+        window[_0x5ed188(0x283)]('mousemove', _0xad679f => {
+            const _0x22bbda = _0x5ed188;
+            updateTargetRotation(_0xad679f[_0x22bbda(0x24a)], _0xad679f['clientY']);
+        }), window[_0x5ed188(0x283)](_0x5ed188(0x252), _0x48e96b => {
+            const _0x33818b = _0x5ed188;
+            if (_0x48e96b[_0x33818b(0x22c)][_0x33818b(0x27b)] > 0x0) {
+                const _0x44ba44 = _0x48e96b[_0x33818b(0x22c)][0x0];
+                updateTargetRotation(_0x44ba44['clientX'], _0x44ba44['clientY']);
+            }
+        }, {
+            'passive': !![]
+        });
+
+        function updateShareLink(_0x2a69c3, _0x226e22, _0x1e1b4c) {
+            const _0x370508 = _0x5ed188,
+                _0x5ee0cf = {
+                    'textLines': _0x2a69c3,
+                    'imageLinks': _0x226e22,
+                    'music': _0x1e1b4c
+                },
+                _0x25a556 = JSON[_0x370508(0x298)](_0x5ee0cf),
+                _0x55b51c = encodeData(_0x25a556),
+                _0x3ceb64 = new URL(location['origin'] + location[_0x370508(0x256)]);
+            _0x3ceb64[_0x370508(0x237)] = 'data=' + _0x55b51c, shareLinkEl[_0x370508(0x209)] = _0x3ceb64['toString'](), shareLinkEl[_0x370508(0x208)] = _0x3ceb64[_0x370508(0x253)](), shareLinkEl[_0x370508(0x213)][_0x370508(0x1fe)] = _0x370508(0x279);
+        }
+        shareLinkEl[_0x5ed188(0x283)](_0x5ed188(0x23b), _0x4a11b9 => {
+            const _0x19db65 = _0x5ed188;
+            navigator[_0x19db65(0x247)]['writeText'](shareLinkEl[_0x19db65(0x208)])[_0x19db65(0x263)](() => {
+                const _0x300782 = _0x19db65;
+                copyMsg[_0x300782(0x213)][_0x300782(0x1fe)] = 'inline', setTimeout(() => {
+                    const _0x6484a7 = _0x300782;
+                    copyMsg['style'][_0x6484a7(0x1fe)] = _0x6484a7(0x27a);
+                }, 0x7d0);
+            })[_0x19db65(0x1f3)](_0x258c1d => console['error']('Không\x20thể\x20sao\x20chép:', _0x258c1d));
+        }), startBtn[_0x5ed188(0x283)](_0x5ed188(0x23b), () => {
+            const _0x179855 = _0x5ed188,
+                _0xe4fed7 = inputTextEl[_0x179855(0x28d)][_0x179855(0x26f)](),
+                _0x201e2b = imageLinksEl[_0x179855(0x28d)][_0x179855(0x26f)](),
+                _0x274827 = musicSelector[_0x179855(0x28d)];
+            if (_0xe4fed7 === '') {
+                alert(_0x179855(0x293)), _0xe4fed7[_0x179855(0x25e)]();
+                return;
+            }
+            if (_0x201e2b === '') {
+                alert(_0x179855(0x28f)), imageLinksEl['focus']();
+                return;
+            }
+            textLines = _0xe4fed7[_0x179855(0x27b)] ? _0xe4fed7[_0x179855(0x20c)]('\x0a')[_0x179855(0x262)](_0xc2d966 => _0xc2d966[_0x179855(0x26f)]() !== '') : [], images = _0x201e2b[_0x179855(0x27b)] ? _0x201e2b['split']('\x0a')[_0x179855(0x262)](_0x1f75ce => _0x1f75ce[_0x179855(0x26f)]() !== '') : [], initScene();
+            for (let _0x50ed04 = 0x0; _0x50ed04 < planes['length']; _0x50ed04++) {
+                let _0x10028b = '';
+                textLines['length'] > 0x0 && (_0x10028b = textLines[_0x50ed04 % textLines['length']]), updateLabelText(_0x50ed04, _0x10028b);
+            }!audio && _0x274827 && waitUserToStartMusic(_0x274827), updateShareLink(textLines, images, _0x274827), playMusic(_0x274827);
+        });
+
+        function loadFromURL() {
+            const _0x13c5df = _0x5ed188,
+                _0x3fd7e4 = getDataFromURL();
+            if (!_0x3fd7e4) return ![];
+            _0x3fd7e4[_0x13c5df(0x24f)] && (textLines = _0x3fd7e4['textLines'], inputTextEl[_0x13c5df(0x28d)] = textLines['join']('\x0a'));
+            _0x3fd7e4['imageLinks'] && (images = _0x3fd7e4[_0x13c5df(0x272)], imageLinksEl['value'] = images['join']('\x0a'));
+            _0x3fd7e4[_0x13c5df(0x29c)] ? (console[_0x13c5df(0x201)](_0x13c5df(0x259), _0x3fd7e4[_0x13c5df(0x29c)]), musicSelector[_0x13c5df(0x28d)] = _0x3fd7e4['music'], playMusic(_0x3fd7e4[_0x13c5df(0x29c)])) : console[_0x13c5df(0x201)](_0x13c5df(0x265));
+            initScene();
+            for (let _0x33b69b = 0x0; _0x33b69b < planes['length'] * 0x2; _0x33b69b++) {
+                let _0x2a6901 = '';
+                textLines[_0x13c5df(0x27b)] > 0x0 && (_0x2a6901 = textLines[_0x33b69b % textLines[_0x13c5df(0x27b)]]), updateLabelText(_0x33b69b, _0x2a6901);
+            }
+            return updateShareLink(textLines, images, _0x3fd7e4[_0x13c5df(0x29c)]), !![];
+        }
+
+        function animate() {
+            const _0x2033de = _0x5ed188;
+            requestAnimationFrame(animate), currentRotX += (targetRotX - currentRotX) * 0.05, currentRotY += (targetRotY - currentRotY) * 0.05;
+            const _0x51563d = 0x190;
+            camera[_0x2033de(0x243)]['x'] = _0x51563d * Math['sin'](currentRotY) * Math[_0x2033de(0x280)](currentRotX), camera[_0x2033de(0x243)]['y'] = _0x51563d * Math[_0x2033de(0x232)](currentRotX), camera['position']['z'] = _0x51563d * Math[_0x2033de(0x280)](currentRotY) * Math['cos'](currentRotX), camera[_0x2033de(0x274)](0x0, 0x0, 0x0);
+            const _0x55e239 = _0x2f4541 => new THREE[(_0x2033de(0x286))](_0x2f4541['x'], _0x2f4541['y'] + 0x3e8, _0x2f4541['z']);
+            planes[_0x2033de(0x227)]((_0x2eefc7, _0xc3a5f8) => {
+                const _0x3e7cce = _0x2033de;
+                let _0x4332f0 = _0x2eefc7['userData'][_0x3e7cce(0x29e)] - _0x2eefc7[_0x3e7cce(0x257)][_0x3e7cce(0x22e)];
+                if (_0x4332f0 < 0x0) _0x4332f0 = 0x0;
+                else {
+                    if (_0x4332f0 > 0x1) _0x4332f0 = 0x1;
+                }
+                const _0x137d2c = _0x55e239(imagePositions[_0xc3a5f8]);
+                _0x2eefc7[_0x3e7cce(0x243)][_0x3e7cce(0x251)](_0x137d2c, imagePositions[_0xc3a5f8], _0x4332f0);
+                let _0x587998 = 0.05 + _0x4332f0 * (0x2 - 0.05);
+                _0x2eefc7[_0x3e7cce(0x241)][_0x3e7cce(0x21d)](_0x587998, _0x587998, _0x587998), _0x2eefc7['userData']['progress'] += _0x2eefc7[_0x3e7cce(0x257)]['speed'];
+                if (_0x2eefc7[_0x3e7cce(0x257)]['progress'] > 0x1 + _0x2eefc7[_0x3e7cce(0x257)][_0x3e7cce(0x22e)]) _0x2eefc7[_0x3e7cce(0x257)]['progress'] = 0x0;
+                const _0x5e8dfd = labels[0x2 * _0xc3a5f8];
+                if (_0x5e8dfd) {
+                    _0x5e8dfd[_0x3e7cce(0x26d)] = _0x4332f0 > 0x0;
+                    const _0xd6c326 = _0x55e239(textPositions[0x2 * _0xc3a5f8]);
+                    _0x5e8dfd[_0x3e7cce(0x243)][_0x3e7cce(0x251)](_0xd6c326, textPositions[0x2 * _0xc3a5f8], _0x4332f0);
+                }
+                const _0x268f45 = labels[0x2 * _0xc3a5f8 + 0x1];
+                if (_0x268f45) {
+                    _0x268f45[_0x3e7cce(0x26d)] = _0x4332f0 > 0x0;
+                    const _0x5ca657 = _0x55e239(textPositions[0x2 * _0xc3a5f8 + 0x1]);
+                    _0x268f45[_0x3e7cce(0x243)]['lerpVectors'](_0x5ca657, textPositions[0x2 * _0xc3a5f8 + 0x1], _0x4332f0);
+                }
+            }), shootingStars[_0x2033de(0x227)](_0xa927f0 => {
+                const _0x35ec4c = _0x2033de;
+                _0xa927f0[_0x35ec4c(0x218)][_0x35ec4c(0x297)](_0xa927f0['velocity']);
+                for (let _0x271396 = 0x0; _0x271396 < 0xa; _0x271396++) {
+                    const _0x927790 = _0x271396 * 0x3;
+                    _0xa927f0[_0x35ec4c(0x220)][_0x927790] = _0xa927f0[_0x35ec4c(0x218)]['x'] - _0xa927f0[_0x35ec4c(0x1f9)]['x'] * _0x271396 * 0.8, _0xa927f0['positions'][_0x927790 + 0x1] = _0xa927f0[_0x35ec4c(0x218)]['y'] - _0xa927f0[_0x35ec4c(0x1f9)]['y'] * _0x271396 * 0.8, _0xa927f0[_0x35ec4c(0x220)][_0x927790 + 0x2] = _0xa927f0['pos']['z'] - _0xa927f0[_0x35ec4c(0x1f9)]['z'] * _0x271396 * 0.8;
+                }
+                _0xa927f0[_0x35ec4c(0x25b)]['geometry'][_0x35ec4c(0x296)][_0x35ec4c(0x243)][_0x35ec4c(0x223)] = !![], _0xa927f0[_0x35ec4c(0x218)]['y'] < -0x1f4 && _0xa927f0[_0x35ec4c(0x218)]['set'](THREE[_0x35ec4c(0x258)][_0x35ec4c(0x203)](0x3e8), THREE['MathUtils'][_0x35ec4c(0x216)](0x190, 0x2bc), THREE[_0x35ec4c(0x258)][_0x35ec4c(0x203)](0x3e8));
+            }), shootingStarsFromStars['forEach'](_0x564a8a => {
+                const _0x17a8df = _0x2033de;
+                _0x564a8a['pos'][_0x17a8df(0x297)](_0x564a8a[_0x17a8df(0x1f9)]);
+                for (let _0x4e631d = 0x0; _0x4e631d < 0xa; _0x4e631d++) {
+                    const _0x5b45b8 = _0x4e631d * 0x3;
+                    _0x564a8a[_0x17a8df(0x220)][_0x5b45b8] = _0x564a8a[_0x17a8df(0x218)]['x'] - _0x564a8a[_0x17a8df(0x1f9)]['x'] * _0x4e631d * 0.5, _0x564a8a[_0x17a8df(0x220)][_0x5b45b8 + 0x1] = _0x564a8a['pos']['y'] - _0x564a8a[_0x17a8df(0x1f9)]['y'] * _0x4e631d * 0.5, _0x564a8a['positions'][_0x5b45b8 + 0x2] = _0x564a8a[_0x17a8df(0x218)]['z'] - _0x564a8a[_0x17a8df(0x1f9)]['z'] * _0x4e631d * 0.5;
+                }
+                _0x564a8a[_0x17a8df(0x25b)][_0x17a8df(0x271)][_0x17a8df(0x296)]['position'][_0x17a8df(0x223)] = !![];
+                if (_0x564a8a[_0x17a8df(0x218)][_0x17a8df(0x27b)]() > 0x514) {
+                    const _0x23aefe = Math[_0x17a8df(0x278)](Math[_0x17a8df(0x24c)]() * starPositions[_0x17a8df(0x27b)]);
+                    _0x564a8a[_0x17a8df(0x218)][_0x17a8df(0x235)](starPositions[_0x23aefe]);
+                    const _0x501445 = _0x564a8a[_0x17a8df(0x218)]['clone']()[_0x17a8df(0x1f1)]();
+                    _0x564a8a[_0x17a8df(0x1f9)][_0x17a8df(0x235)](_0x501445[_0x17a8df(0x297)](new THREE[(_0x17a8df(0x286))](THREE['MathUtils'][_0x17a8df(0x203)](0.5), THREE[_0x17a8df(0x258)][_0x17a8df(0x203)](0.5), THREE['MathUtils']['randFloatSpread'](0.5)))[_0x17a8df(0x1f1)]()[_0x17a8df(0x21c)](0x5 + Math[_0x17a8df(0x24c)]() * 0x5));
+                }
+            }), renderer[_0x2033de(0x22f)](scene, camera);
+        }
+        animate();
+        loadFromURL() ? document[_0x5ed188(0x238)]('ui')[_0x5ed188(0x213)][_0x5ed188(0x1fe)] = _0x5ed188(0x27a) : shareLinkEl[_0x5ed188(0x213)]['display'] = _0x5ed188(0x27a);
+        window['addEventListener'](_0x5ed188(0x29a), () => {
+            const _0x2bb952 = _0x5ed188;
+            camera['aspect'] = window['innerWidth'] / window[_0x2bb952(0x22d)], camera[_0x2bb952(0x250)](), renderer[_0x2bb952(0x1fd)](window[_0x2bb952(0x24e)], window[_0x2bb952(0x22d)]);
+        }), document[_0x5ed188(0x238)](_0x5ed188(0x21f))[_0x5ed188(0x283)](_0x5ed188(0x23b), () => {
+            const _0x1de94a = _0x5ed188,
+                _0x4e60f3 = window['location'][_0x1de94a(0x2a0)] + window[_0x1de94a(0x268)]['pathname'] + _0x1de94a(0x214) + encodeURIComponent(_0x401128),
+                _0x401128 = _0x4e60f3,
+                _0xc260eb = document[_0x1de94a(0x238)](_0x1de94a(0x242));
+            _0xc260eb[_0x1de94a(0x208)] = _0x4e60f3, _0xc260eb[_0x1de94a(0x209)] = shortenLink(_0x4e60f3, maxLength), _0xc260eb['title'] = _0x4e60f3, _0xc260eb[_0x1de94a(0x213)][_0x1de94a(0x1fe)] = _0x1de94a(0x21e);
+        }), qrBtn['addEventListener'](_0x5ed188(0x23b), async() => {
+            const _0x1506ed = _0x5ed188;
+            if (!shareLinkEl[_0x1506ed(0x208)] || shareLinkEl[_0x1506ed(0x213)][_0x1506ed(0x1fe)] === 'none') {
+                alert(_0x1506ed(0x23f));
+                return;
+            }
+            const _0x6a1be8 = shareLinkEl[_0x1506ed(0x208)];
+            heartFrame[_0x1506ed(0x213)][_0x1506ed(0x1fe)] = _0x1506ed(0x270), await drawHeartAndQRCode(_0x6a1be8);
+        });
+        const width = canvas[_0x5ed188(0x20f)],
+            height = canvas[_0x5ed188(0x277)],
+            heartPathStr = _0x5ed188(0x22a),
+            scale = 0x8,
+            heartWidth = 0x20,
+            heartHeight = 29.6,
+            heartCenterX = heartWidth / 0x2,
+            heartCenterY = 0x1c / 0x2,
+            centerX = width / 0x2,
+            centerY = height / 0x2,
+            qrSize = 0x78;
+        async function drawHeartAndQRCode(_0x5de568) {
+            const _0x3c3aba = _0x5ed188;
+            ctx[_0x3c3aba(0x28e)](0x0, 0x0, width, height), ctx[_0x3c3aba(0x1fa)](), ctx[_0x3c3aba(0x281)](centerX - heartCenterX * scale, centerY - heartCenterY * scale), ctx[_0x3c3aba(0x241)](scale, scale), ctx[_0x3c3aba(0x25a)] = _0x3c3aba(0x255);
+            const _0x3bfe86 = new Path2D(heartPathStr);
+            ctx[_0x3c3aba(0x23e)](_0x3bfe86), ctx[_0x3c3aba(0x20e)]();
+            try {
+                const _0x162d6a = document[_0x3c3aba(0x1fc)](_0x3c3aba(0x266));
+                _0x162d6a[_0x3c3aba(0x20f)] = qrSize, _0x162d6a[_0x3c3aba(0x277)] = qrSize, await QRCode[_0x3c3aba(0x25c)](_0x162d6a, _0x5de568, {
+                    'width': qrSize,
+                    'margin': 0x1,
+                    'color': {
+                        'dark': _0x3c3aba(0x290),
+                        'light': _0x3c3aba(0x226)
+                    }
+                });
+                const _0x205372 = centerX - qrSize / 0x2,
+                    _0x378adb = centerY - qrSize / 0x2;
+                ctx[_0x3c3aba(0x291)](_0x162d6a, _0x205372, _0x378adb, qrSize, qrSize);
+            } catch (_0x4000cf) {
+                console[_0x3c3aba(0x26a)](_0x3c3aba(0x244), _0x4000cf);
+            }
+        }
+        canvas[_0x5ed188(0x283)]('click', () => {
+            const _0x57c5fd = _0x5ed188;
+            canvas['toBlob'](function(_0x1bdac1) {
+                const _0x3bd412 = _0x2a03,
+                    _0x3b443f = document[_0x3bd412(0x1fc)]('a');
+                _0x3b443f['download'] = _0x3bd412(0x28b);
+                const _0x3dfc9c = URL['createObjectURL'](_0x1bdac1);
+                _0x3b443f[_0x3bd412(0x208)] = _0x3dfc9c, document[_0x3bd412(0x2a1)][_0x3bd412(0x1f6)](_0x3b443f), _0x3b443f['click'](), document[_0x3bd412(0x2a1)][_0x3bd412(0x26e)](_0x3b443f), URL[_0x3bd412(0x1fb)](_0x3dfc9c);
+            }, _0x57c5fd(0x1f5));
+        });
+    </script>
+</body>
+
+</html>
