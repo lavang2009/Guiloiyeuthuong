@@ -9,6 +9,12 @@
 </head>
 
 <body>
+    <div id="loading">
+        <div class="spinner-container">
+            <div class="spinner"></div>
+            <div class="loading-text">lavang.github.io</div>
+        </div>
+    </div>
     <div class="container">
         <h1>Một Chút Yêu Thương</h1>
         <p class="subtitle">
@@ -86,6 +92,22 @@
         donateDialog.addEventListener('click', (e) => {
             if (e.target === donateDialog) {
                 donateDialog.classList.remove('active');
+            }
+        });
+        document.addEventListener("DOMContentLoaded", function() {
+            // Kiểm tra xem người dùng đã load lần đầu chưa
+            if (!localStorage.getItem("firstVisitDone")) {
+                // Lần đầu: hiển thị loading
+                window.addEventListener("load", function() {
+                    document.getElementById("loading").style.display = "none";
+                    document.getElementById("content").style.display = "block";
+                    // Đánh dấu đã load lần đầu
+                    localStorage.setItem("firstVisitDone", "true");
+                });
+            } else {
+                // Lần truy cập sau: bỏ qua loading
+                document.getElementById("loading").style.display = "none";
+                document.getElementById("content").style.display = "block";
             }
         });
     </script>
